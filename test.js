@@ -9,25 +9,25 @@ pdfParser.on("pdfParser_dataError", (errData) =>
     console.error(errData.parserError)
 );
 
-// // for json format
-// pdfParser.on("pdfParser_dataReady", (pdfData) => {
-    // fs.writeFile(
-    //     "pdf.json",
-    //     JSON.stringify(pdfData),
-    //     (data) => console.log('Completed.')
-    // );
-// });
+// for json format
+pdfParser.on("pdfParser_dataReady", (pdfData) => {
+    fs.writeFile(
+        "pdf.json",
+        JSON.stringify(pdfData),
+        (data) => console.log('Completed.')
+    );
+});
 
-// pdfParser.loadPDF("CE 6.pdf");
+pdfParser.loadPDF("CE 6.pdf");
 
-// console.log(pdf.Pages.length);
+console.log(pdf.Pages.length);
 
-// pdf.Pages[0].Texts.forEach((data) => {
-//     if (data.R[0].T === "Number") {
-//        console.log()
-//     }
-//     console.log(data.R[0].T)
-// });
+pdf.Pages[0].Texts.forEach((data) => {
+    if (data.R[0].T === "Number") {
+       console.log()
+    }
+    console.log(data.R[0].T)
+});
 
 
 
