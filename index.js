@@ -19,17 +19,15 @@ pdfParser.loadPDF("CE 08.pdf");
 
 
 async function constructStudentDataFromPDF(pdf) {
-
-    let registerNumber;
-    let firstName;
-    let lastName;
-    let regulation;
-    let subjects = [];
-    let numberOfSubjects;
-    let department;
-    let index;
-
     for (j = 0; j <= pdf.Pages.length - 1; j++) {
+        let registerNumber;
+        let firstName;
+        let lastName;
+        let regulation;
+        let subjects = [];
+        let numberOfSubjects;
+        let department;
+        let index;
         for (i = 0; i <= pdf.Pages[j].Texts.length - 1; i++) {
             // this code for checking the text objects
             if (pdf.Pages[j].Texts[i].R[0].T == "Number") {
