@@ -1,8 +1,7 @@
 const fs = require('fs');
 const PDFParser = require('pdf2json');
 const pdfParser = new PDFParser(this, 1);
-const pdf = require('./pdf.json');
-let studentData = [];
+let time_table = [];
 let i, j;
 
 pdfParser.on("pdfParser_dataError", (errData) =>
@@ -10,88 +9,73 @@ pdfParser.on("pdfParser_dataError", (errData) =>
 );
 
 // for json format
-pdfParser.on("pdfParser_dataReady", (pdfData) => {
-    fs.writeFile(
-        "pdf.json",
-        JSON.stringify(pdfData),
-        (data) => console.log('Completed.')
-    );
+pdfParser.on("pdfParser_dataReady", async (pdfData) => {
+    const pdf = await pdfData;
+    // console.log(pdf);
+    await constructStudentDataFromPDF(pdf);
 });
 
-pdfParser.loadPDF("CE 6.pdf");
-
-console.log(pdf.Pages.length);
-
-pdf.Pages[0].Texts.forEach((data) => {
-    if (data.R[0].T === "Number") {
-       console.log()
-    }
-    console.log(data.R[0].T)
-});
+pdfParser.loadPDF("date.pdf");
 
 
-
-for (j = 0; j <= pdf.Pages.length - 1; j++) {
-    let registerNumber;
-    let firstName;
-    let lastName;
-    let regulation;
-    let subjects = [];
-    let numberOfSubjects;
-    let department;
-    let index;
-    for (i = 0; i <= pdf.Pages[j].Texts.length - 1; i++) {
-        // this code for checking the text objects
-        if (pdf.Pages[j].Texts[i].R[0].T == "Number") {
-            // getting the student register number
-            registerNumber = pdf.Pages[j].Texts[i + 1].R[0].T
-            console.log(registerNumber);
-        } else if (pdf.Pages[j].Texts[i].R[0].T == "Subjects") {
-            numberOfSubjects = Number(pdf.Pages[j].Texts[i + 1].R[0].T)
-            console.log(numberOfSubjects);
-        } else if (pdf.Pages[j].Texts[i].R[0].T == "the") {
-            // this code is for getting the student name 
-            if (pdf.Pages[j].Texts[i + 1].R[0].T == "Candidate") {
-                firstName = pdf.Pages[j].Texts[i + 2].R[0].T;
-                lastName = pdf.Pages[j].Texts[i + 3].R[0].T;
-                console.log(firstName);
-                console.log(lastName);
+async function constructStudentDataFromPDF(pdf) {
+    for (j = 0; j <1; j++) {
+        let dict_data={};
+        let department;
+        let count=0;
+        for (i = 0; i <= pdf.Pages[j].Texts.length - 1; i++) {
+            if(pdf.Pages[j].Texts[i].R[0].T==="Branch%20Name"){
+                department= pdf.Pages[j].Texts[i+1].R[0].T
+                i=i+2;
+                while(pdf.Pages[j].Texts[i].R[0].T!="Semes"){
+                    count=count+1;
+                    i=i+1;
+                } 
+                i=i+4;
             }
-
-        } else if (pdf.Pages[j].Texts[i].R[0].T == "Regulations") {
-            // this is for regulations.
-            regulation = pdf.Pages[j].Texts[i + 1].R[0].T;
-            console.log(regulation);
-        } else if (pdf.Pages[j].Texts[i].R[0].T == "B.E.") {
-            // this is for department
-            department = pdf.Pages[j].Texts[i + 1].R[0].T;
-            console.log(department);
-        } else if (pdf.Pages[j].Texts[i].R[0].T.lastIndexOf("Title") !== -1) {
-            // this is for index
-            index = i + 1 ;
+            
+            if(pdf.Pages[j].Texts[i].R[0].T==="Code"){
+                let init=i+count+1;
+                let total=i+count+count;
+                let date=i+count+count+1;
+                
+                for(let sub=init;sub<=total;sub++){
+                    let arr=[];
+                    if(date<i+count+count+count){
+                        let date_data=pdf.Pages[j].Texts[date].R[0].T;
+                        date=date+1;
+                        let k=0;
+                        if(dict_data[date_data]){
+                            dict_data[date_data]=dict_data[date_data]+","+pdf.Pages[j].Texts[sub+k].R[0].T
+                            arr=dict_data[date_data].split(",")
+                        }else{
+                            while(date_data==pdf.Pages[j].Texts[date].R[0].T){
+                       
+                                arr.push(pdf.Pages[j].Texts[sub+k].R[0].T)
+                                date_data=pdf.Pages[j].Texts[date].R[0].T
+                                date=date+1;
+                                sub=sub+1;
+                            }
+                            arr.push(pdf.Pages[j].Texts[sub].R[0].T)
+                            
+                        }
+                        dict_data[date_data]=arr
+                    }
+                }
+            }
+            
         }
+        const TimeTable={
+            department:department,
+            date:dict_data
+        }
+        time_table.push(TimeTable);
+        console.log(TimeTable);
     }
-    // TODO looping for getting the subjects of the students
-    for(let k = 0 ; k <= numberOfSubjects -1 ; k++){
-        // storing the student subjects in array
-        subjects.push(pdf.Pages[j].Texts[index + numberOfSubjects + k].R[0].T)
-        // console.log(pdf.Pages[j].Texts[index + numberOfSubjects + k].R[0].T);
-    }
-    // TODO constructing the students data.
-    const individualStudentData = {
-        id: registerNumber,
-        registerNumber: registerNumber,
-        firstName: firstName,
-        lastName: lastName,
-        department: department,
-        regulation: regulation,
-        subjects: subjects,
-    }
-
-    // TODO  console.log(individualStudentData);
-    // pushing the constructed student data into studentData
-    studentData.push(individualStudentData);
-    // console.log(pdf.Pages[j].Texts[index + numberOfSubjects].R[0].T);
+    fs.writeFile(
+        "exam_date.json",
+        JSON.stringify(time_table),
+        (data) => console.log('Data Created')
+    );
 }
 
-console.log(studentData);

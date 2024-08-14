@@ -33,27 +33,21 @@ async function constructStudentDataFromPDF(pdf) {
             if (pdf.Pages[j].Texts[i].R[0].T == "Number") {
                 // getting the student register number
                 registerNumber = pdf.Pages[j].Texts[i + 1].R[0].T
-                console.log(registerNumber);
             } else if (pdf.Pages[j].Texts[i].R[0].T == "Subjects") {
                 numberOfSubjects = Number(pdf.Pages[j].Texts[i + 1].R[0].T)
-                console.log(numberOfSubjects);
             } else if (pdf.Pages[j].Texts[i].R[0].T == "the") {
                 // this code is for getting the student name 
                 if (pdf.Pages[j].Texts[i + 1].R[0].T == "Candidate") {
                     firstName = pdf.Pages[j].Texts[i + 2].R[0].T;
                     lastName = pdf.Pages[j].Texts[i + 3].R[0].T;
-                    console.log(firstName);
-                    console.log(lastName);
                 }
 
             } else if (pdf.Pages[j].Texts[i].R[0].T == "Regulations") {
                 // this is for regulations.
                 regulation = pdf.Pages[j].Texts[i + 1].R[0].T;
-                console.log(regulation);
             } else if (pdf.Pages[j].Texts[i].R[0].T == "B.E.") {
                 // this is for department
                 department = pdf.Pages[j].Texts[i + 1].R[0].T;
-                console.log(department);
             } else if (pdf.Pages[j].Texts[i].R[0].T.lastIndexOf("Title") !== -1) {
                 // this is for index
                 index = i + 1;
@@ -63,7 +57,7 @@ async function constructStudentDataFromPDF(pdf) {
         for (let k = 0; k <= numberOfSubjects - 1; k++) {
             // storing the student subjects in array
             subjects.push(pdf.Pages[j].Texts[index + numberOfSubjects + k].R[0].T)
-            // console.log(pdf.Pages[j].Texts[index + numberOfSubjects + k].R[0].T);
+            console.log(index + numberOfSubjects + k);
         }
         // TODO constructing the students data.
         const individualStudentData = {
