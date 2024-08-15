@@ -1,6 +1,7 @@
 const fs = require('fs');
 const PDFParser = require('pdf2json');
 const pdfParser = new PDFParser(this, 1);
+const path = require('path');
 let time_table = [];
 let i, j;
 
@@ -15,9 +16,7 @@ pdfParser.on("pdfParser_dataReady", async (pdfData) => {
     await constructStudentDataFromPDF(pdf);
 });
 
-pdfParser.loadPDF("date.pdf");
-
-
+pdfParser.loadPDF(path.join(__dirname,"date.pdf"));
 async function constructStudentDataFromPDF(pdf) {
     for (j = 0; j <1; j++) {
         let dict_data={};
