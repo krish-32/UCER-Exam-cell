@@ -18,7 +18,7 @@ pdfParser.on("pdfParser_dataReady", async (pdfData) => {
 
 pdfParser.loadPDF(path.join(__dirname,"date.pdf"));
 async function constructStudentDataFromPDF(pdf) {
-    for (j = 0; j <1; j++) {
+    for (j = 0; j <pdf.Pages.length; j++) {
         let dict_data={};
         let department;
         let count=0;
