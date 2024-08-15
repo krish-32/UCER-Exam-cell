@@ -69,12 +69,19 @@ async function constructStudentDataFromPDF(pdf) {
             date:dict_data
         }
         time_table.push(TimeTable);
-        console.log(TimeTable);
     }
     fs.writeFile(
-        "exam_date.json",
+        path.join(__dirname,"exam_date.json"),
         JSON.stringify(time_table),
-        (data) => console.log('Data Created')
+        (err,data) => 
+        {
+            if (err) throw err;
+            console.log('Data Created')
+        }
     );
+    process.on('error',err=>{
+        console.error(`Error:${err}`);
+        process.exit(1);
+    })
 }
 
