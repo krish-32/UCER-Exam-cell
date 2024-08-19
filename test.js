@@ -69,6 +69,7 @@ async function constructStudentDataFromPDF(pdf) {
             date:dict_data
         }
         time_table.push(TimeTable);
+        console.log(time_table);
     }
     fs.writeFile(
         path.join(__dirname,"exam_date.json"),
