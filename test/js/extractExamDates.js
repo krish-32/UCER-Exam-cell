@@ -17,7 +17,7 @@ pdfParser.on("pdfParser_dataReady", async (pdfData) => {
     await constructExamDatesFromPDF(pdf);
 });
 
-pdfParser.loadPDF('date.pdf');
+pdfParser.loadPDF('../date.pdf');
 async function constructExamDatesFromPDF(pdf) {
     for (j = 0; j <pdf.Pages.length; j++) {
         // let dict_data={};
@@ -65,10 +65,10 @@ async function constructExamDatesFromPDF(pdf) {
             }
             
         }
-        // const TimeTable={
-        //     department:department,
-        //     date:dict_data
-        // }
+        const TimeTable={
+            department:department,
+            date:dict_data
+        }
         time_table.push(dict_data);
     }
     fs.writeFile(
@@ -83,6 +83,6 @@ async function constructExamDatesFromPDF(pdf) {
     process.on('error',err=>{
         console.error(`Error:${err}`);
         process.exit(1);
-    })
+    });
 }
 

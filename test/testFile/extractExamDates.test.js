@@ -83,6 +83,6 @@ async function constructExamDatesFromPDF(pdf) {
     process.on('error',err=>{
         console.error(`Error:${err}`);
         process.exit(1);
-    })
+    });
 }
 
