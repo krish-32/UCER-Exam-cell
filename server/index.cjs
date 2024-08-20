@@ -38,7 +38,7 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
       console.error(errData.parserError)
     );
   } catch (error) {
-    res.status(500).json({ 'message': 'Failed to merge PDFs.',error: error.message});
+    res.status(500).json({ message: 'Failed to merge PDFs.',error: error.message});
   };
 });
 //api port for student detail data
