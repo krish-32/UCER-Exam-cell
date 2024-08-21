@@ -103,6 +103,7 @@ async function merge_function(pathOfpdfFiles,files) {
 
       // Copy all pages from the current PDF into the merged PDF
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+      console.log(mergedPdf);
       copiedPages.forEach(page => mergedPdf.addPage(page));
       fs.unlink(filePath, (err) => {
         if (err) {
