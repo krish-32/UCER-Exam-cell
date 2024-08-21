@@ -5,7 +5,7 @@ let i, j;
 
 
 async function constructExamDatesFromPDF(pdf) {
-    for (j = 0; j <1; j++) {
+    for (j = 0; j <pdf.Pages.length; j++) {
         // let dict_data={};
         let department;
         let count=0;

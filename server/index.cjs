@@ -66,7 +66,7 @@ app.post('/ExamDates',upload.array('file'),async(req,res)=>{
     await pdfParser.on('pdfParser_dataReady', async (pdfData) => {
       // Process the PDF data to extract student details
       const datesOfExam = await constructExamDatesFromPDF(pdfData);
-
+      console.log(datesOfExam);
       return res.status(200).send(JSON.stringify({ message: datesOfExam }));
     });
     pdfParser.on('pdfParser_dataError', (errData) => {
@@ -103,7 +103,6 @@ async function merge_function(pathOfpdfFiles,files) {
 
       // Copy all pages from the current PDF into the merged PDF
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-      console.log(mergedPdf);
       copiedPages.forEach(page => mergedPdf.addPage(page));
       fs.unlink(filePath, (err) => {
         if (err) {
