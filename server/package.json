@@ -1,11 +1,13 @@
 {
-  "name": "pdf",
+  "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "UCER Exam Cell Backend",
+  "main": "index.cjs",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "nodemon index.cjs"
+
   },
   "author": "WebMa Dev Team",
   "license": "ISC",
