@@ -23,35 +23,35 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
     //this gives a buffer data of the input pdf file and it includes merge function to compain pdf
       await merge_function(req.files);
     
-    await new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
       //this load the pdf buffer data to read the merged pdf file
-      pdfParser.loadPDF(path.join(__dirname, 'output_files', 'modified.pdf'));
-      //this read the merged pdf data and get the student data as per the imported function
-      pdfParser.on('pdfParser_dataReady', async (pdfData) => {
-        try {
-          // Process the PDF data to extract student details
-          const dataOfStudent = await constructStudentDataFromPDF(pdfData);
-          resolve(dataOfStudent);
-        } catch (error) {
+        pdfParser.loadPDF(path.join(__dirname, 'output_files', 'modified.pdf'));
+        //this read the merged pdf data and get the student data as per the imported function
+        pdfParser.on('pdfParser_dataReady', async (pdfData) => {
+          try {
+            // Process the PDF data to extract student details
+            const dataOfStudent = await constructStudentDataFromPDF(pdfData);
+            resolve(dataOfStudent);
+          } catch (error) {
           reject(error);
-        }
-      });
+          }
+        });
 
-      pdfParser.on('pdfParser_dataError', (errData) => {
-        reject(errData.parserError);
+        pdfParser.on('pdfParser_dataError', (errData) => {
+          reject(errData.parserError);
+        });
+      }).then((dataOfStudent) => {
+        res.json(dataOfStudent);
+      }).catch((error) => {
+        res.status(500).json({ message: 'Failed to process PDF data.', error: error.message });
       });
-    }).then((dataOfStudent) => {
-      res.json(dataOfStudent);
-    }).catch((error) => {
-      res.status(500).json({ message: 'Failed to process PDF data.', error: error.message });
-    });
-  } catch (error) {
+    } catch (error) {
     res.status(500).json({ message: 'Failed to merge PDFs.',error: error.message});
   };
 });
 //api port for student detail data
 app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}/studentData`);
+  console.log(`Server is running on port http://localhost:${PORT}/studentData/`);
 });
 
 async function merge_function(files) {
@@ -66,6 +66,11 @@ async function merge_function(files) {
       // Copy all pages from the current PDF into the merged PDF
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
       copiedPages.forEach(page => mergedPdf.addPage(page));
+      fs.unlink(filePath, (err) => {
+        if (err) {
+            console.error(`Error deleting file: ${filePath}. ${err}`);
+        }
+    });
     }
     
     // Save the merged PDF as a buffer
@@ -74,6 +79,7 @@ async function merge_function(files) {
       if (err) throw err;
       console.log('Modified PDF saved.');
   });
+  
   return mergedPdfBytes;
   // for json format
 }
