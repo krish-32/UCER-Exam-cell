@@ -21,31 +21,20 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
 
   try {
     //this gives a buffer data of the input pdf file and it includes merge function to compain pdf
-      await merge_function(req.files);
-    
-      await new Promise((resolve, reject) => {
-      //this load the pdf buffer data to read the merged pdf file
-        pdfParser.loadPDF(path.join(__dirname, 'output_files', 'modified.pdf'));
-        //this read the merged pdf data and get the student data as per the imported function
-        pdfParser.on('pdfParser_dataReady', async (pdfData) => {
-          try {
-            // Process the PDF data to extract student details
-            const dataOfStudent = await constructStudentDataFromPDF(pdfData);
-            resolve(dataOfStudent);
-          } catch (error) {
-          reject(error);
-          }
-        });
-
-        pdfParser.on('pdfParser_dataError', (errData) => {
-          reject(errData.parserError);
-        });
-      }).then((dataOfStudent) => {
-        res.json(dataOfStudent);
-      }).catch((error) => {
-        res.status(500).json({ message: 'Failed to process PDF data.', error: error.message });
-      });
-    } catch (error) {
+    await merge_function(req.files);  
+    //this load the pdf buffer data to read the merged pdf file
+    await pdfParser.loadPDF(path.join(__dirname, 'output_files', 'modified.pdf'));
+    //this read the merged pdf data and get the student data as per the imported function
+    await pdfParser.on('pdfParser_dataReady', async (pdfData) => {
+      // Process the PDF data to extract student details
+      const dataOfStudent = await constructStudentDataFromPDF(pdfData);
+        return res.json(dataOfStudent);
+    });
+    pdfParser.on('pdfParser_dataError', (errData) => {
+      console.log("error on pdf read");
+    });
+      
+  }catch (error) {
     res.status(500).json({ message: 'Failed to merge PDFs.',error: error.message});
   };
 });
