@@ -1,6 +1,7 @@
 import PDFParser from 'pdf2json';
 const pdfParser = new PDFParser(this, 1);
 let dict_data = {};
+let CollectionOfDates=[]
 let i, j;
 
 export default async function extractExamDates(loc) {
@@ -68,6 +69,7 @@ async function constructExamDatesFromPDF(pdf) {
             }
 
         }
+        return CollectionOfDates.push(dict_data)
     }
 }
 
