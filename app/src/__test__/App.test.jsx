@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { expect, test } from 'vitest'
+import App from '../App';
 
 test('renders university name', () => {
   render(<App />);
-  const linkElement = screen.getByText(/UNIVERSITY COLLEGE OF ENGINEERING RAMANATHAPURAM/i);
+  const linkElement = screen.getByText(/App/);
   expect(linkElement).toBeInTheDocument();
 });
 

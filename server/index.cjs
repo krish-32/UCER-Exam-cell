@@ -27,14 +27,14 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
       //this gives a buffer data of the input pdf file and it includes merge function to compain pdf
       await merge_function(path.join(__dirname, 'output_files', 'merged_pdf.pdf'), req.files);
       //this load the pdf buffer data to read the merged pdf file
-      pdfParser.loadPDF(path.join(__dirname, 'output_files', 'merged_pdf.pdf'));
+      await pdfParser.loadPDF(path.join(__dirname, 'output_files', 'merged_pdf.pdf'));
       //this read the merged pdf data and get the student data as per the imported function
       pdfParser.once('pdfParser_dataReady', async (pdfData) => {
         // Process the PDF data to extract student details
         const dataOfStudent = await constructStudentDataFromPDF(pdfData);
         // removing the pdfParser_dataReady event
         pdfParser.removeAllListeners();
-        return res.status(200).json(dataOfStudent)
+        return res.status(200).json(dataOfStudent);
       });
        pdfParser.once('pdfParser_dataError', (errData) => {
         console.log(errData);
@@ -57,7 +57,7 @@ app.post('/ExamDates', upload.array('file'), async (req, res) => {
     try {
       await merge_function(path.join(__dirname, 'output_files', 'dates_pdf.pdf'), req.files)
       //this load the pdf buffer data to read the merged pdf file
-       pdfParser.loadPDF(path.join(__dirname, 'output_files', 'dates_pdf.pdf'));
+      await pdfParser.loadPDF(path.join(__dirname, 'output_files', 'dates_pdf.pdf'));
       //this read the merged pdf data and get the student data as per the imported function
       pdfParser.once('pdfParser_dataReady', async (pdfData) => {
         // Process the PDF data to extract student details
@@ -78,8 +78,6 @@ app.post('/ExamDates', upload.array('file'), async (req, res) => {
     };
   }
 });
-
-
 
 
 
@@ -115,7 +113,7 @@ async function merge_function(pathOfpdfFiles, files) {
   mergedPdfBytes = await mergedPdf.save();
   fs.writeFile(pathOfpdfFiles, mergedPdfBytes, (err) => {
     if (err) throw err;
-    console.log('Modified PDF saved.');
+    console.log('PDF processed.');
   });
 
   return mergedPdfBytes;
