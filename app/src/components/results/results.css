@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+section{
+    background-color: #FCFCFC;
+    font-family: "Inria Serif", serif;
+    font-weight: 400;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-image: url('../../assets/au-logo.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}

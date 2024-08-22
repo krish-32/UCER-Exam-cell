@@ -1,10 +1,16 @@
-import React from 'react'
+import React from "react";
+import Header from "./components/header/Header";
+import Operations from "./components/operations/Operations";
+import Results from "./components/results/Results";
 
 const App = () => {
-
   return (
-    <h1>App</h1>
-  )
-}
+    <>
+      <Header />
+      <Operations />
+      <Results />
+    </>
+  );
+};
 
-export default App
+export default App;
