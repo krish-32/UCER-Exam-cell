@@ -8,7 +8,8 @@ const path = require('path');
 const constructStudentDataFromPDF = require('./extractStudentData.cjs');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const constructExamDatesFromPDF = require('./extractExamDates.cjs')
+const constructExamDatesFromPDF = require('./extractExamDates.cjs');
+const { error } = require('console');
 // Set up multer for handling file uploads and specify the destination folder
 const upload = multer({ dest: 'output_files' });
 
@@ -25,11 +26,11 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
   } else {
     try {
       //this gives a buffer data of the input pdf file and it includes merge function to compain pdf
-      await merge_function(path.join(__dirname, 'output_files', 'merged_pdf.pdf'), req.files);
+      const Student_buffer_data=await merge_function(req.files);
       //this load the pdf buffer data to read the merged pdf file
-      await pdfParser.loadPDF(path.join(__dirname, 'output_files', 'merged_pdf.pdf'));
+      await  pdfParser.parseBuffer(Student_buffer_data);
       //this read the merged pdf data and get the student data as per the imported function
-      pdfParser.once('pdfParser_dataReady', async (pdfData) => {
+      await pdfParser.once('pdfParser_dataReady', async (pdfData) => {
         // Process the PDF data to extract student details
         const dataOfStudent = await constructStudentDataFromPDF(pdfData);
         // removing the pdfParser_dataReady event
@@ -55,15 +56,16 @@ app.post('/ExamDates', upload.array('file'), async (req, res) => {
   }
   else {
     try {
-      await merge_function(path.join(__dirname, 'output_files', 'dates_pdf.pdf'), req.files)
+      const Dates_buffer_data=await merge_function(req.files)
       //this load the pdf buffer data to read the merged pdf file
-      await pdfParser.loadPDF(path.join(__dirname, 'output_files', 'dates_pdf.pdf'));
+      await pdfParser.parseBuffer(Dates_buffer_data);
       //this read the merged pdf data and get the student data as per the imported function
-      pdfParser.once('pdfParser_dataReady', async (pdfData) => {
+      await pdfParser.once('pdfParser_dataReady', async (pdfData) => {
         // Process the PDF data to extract student details
         const datesOfExam = await constructExamDatesFromPDF(pdfData);
         // removing the pdfParser_dataReady event
         pdfParser.removeAllListeners();
+        //console.log(datesOfExam);
         return res.status(200).json(datesOfExam);
       });
       pdfParser.once('pdfParser_dataError',  (errData) => {
@@ -90,7 +92,7 @@ app.listen(PORT, () => {
 
 
 
-async function merge_function(pathOfpdfFiles, files) {
+async function merge_function(files) {
   const mergedPdf = await PDFDocument.create();
 
   for (let file of files) {
@@ -111,11 +113,6 @@ async function merge_function(pathOfpdfFiles, files) {
 
   // Save the merged PDF as a buffer
   mergedPdfBytes = await mergedPdf.save();
-  fs.writeFile(pathOfpdfFiles, mergedPdfBytes, (err) => {
-    if (err) throw err;
-    console.log('PDF processed.');
-  });
-
   return mergedPdfBytes;
   // for json format
 }

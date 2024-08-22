@@ -27,14 +27,15 @@ async function constructExamDatesFromPDF(pdf) {
                 
                 for(let sub=init;sub<=total;sub++){
                     let arr=[];
+                    let sorted_array=[];
                     if(date<i+count+count+count){
                         let date_data=pdf.Pages[j].Texts[date].R[0].T;
                         date=date+1;
                         let k=0;
                         if(dict_data[date_data]){
                             dict_data[date_data]=dict_data[date_data]+","+pdf.Pages[j].Texts[sub+k].R[0].T
-                            arr=dict_data[date_data].split(",")
-                        }else{
+                            arr=dict_data[date_data].split(",");
+                        }else {
                             while(date_data==pdf.Pages[j].Texts[date].R[0].T){
                        
                                 arr.push(pdf.Pages[j].Texts[sub+k].R[0].T)
@@ -42,10 +43,13 @@ async function constructExamDatesFromPDF(pdf) {
                                 date=date+1;
                                 sub=sub+1;
                             }
+                            
                             arr.push(pdf.Pages[j].Texts[sub].R[0].T)
                             
                         }
-                        dict_data[date_data]=arr
+                        //eliminating the dublicates in array
+                        sorted_array = Array.from(new Set(arr));
+                        dict_data[date_data]=sorted_array ;
                     }
                 }
             }
