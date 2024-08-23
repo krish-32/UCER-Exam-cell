@@ -1,5 +1,4 @@
-const fs = require('fs');
-let time_table = [];
+//const fs = require('fs');
 let dict_data={};
 let i, j;
 
@@ -7,11 +6,9 @@ let i, j;
 async function constructExamDatesFromPDF(pdf) {
     for (j = 0; j <pdf.Pages.length; j++) {
         // let dict_data={};
-        let department;
         let count=0;
         for (i = 0; i <= pdf.Pages[j].Texts.length - 1; i++) {
             if(pdf.Pages[j].Texts[i].R[0].T==="Branch%20Name"){
-                department= pdf.Pages[j].Texts[i+1].R[0].T
                 i=i+2;
                 while(pdf.Pages[j].Texts[i].R[0].T!="Semes"){
                     count=count+1;

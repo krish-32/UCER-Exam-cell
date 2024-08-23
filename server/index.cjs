@@ -13,14 +13,19 @@ const { error } = require('console');
 // Set up multer for handling file uploads and specify the destination folder
 const upload = multer({ dest: 'output_files' });
 
+//this is used to allows the given orgin to fetch data
+const cors = require('cors');
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  methods: 'GET,POST,PUT,DELETE',
+};
 
-
-
+// Apply the CORS middleware with the options
+app.use(cors(corsOptions));
 
 
 // console.log(pdf);
 app.post('/studentData', upload.array('pdfs'), async (req, res) => {
-
   if (!req.files) {
     return res.status(400).json({ message: 'No files were uploaded.' });
   } else {
@@ -37,8 +42,8 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
         pdfParser.removeAllListeners();
         return res.status(200).json(dataOfStudent);
       });
-       pdfParser.once('pdfParser_dataError', (errData) => {
-        console.log(errData);
+       await pdfParser.once('pdfParser_dataError', (errData) => {
+        //console.log(errData);
         // removing the pdfParser_dataError event
         pdfParser.removeAllListeners();
         return res.status(500).json(errData);
@@ -68,7 +73,7 @@ app.post('/ExamDates', upload.array('file'), async (req, res) => {
         //console.log(datesOfExam);
         return res.status(200).json(datesOfExam);
       });
-      pdfParser.once('pdfParser_dataError',  (errData) => {
+      await pdfParser.once('pdfParser_dataError',  (errData) => {
         console.log(errData);
         // removing the pdfParser_dataError event
         pdfParser.removeAllListeners();

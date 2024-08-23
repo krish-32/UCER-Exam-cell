@@ -5,13 +5,16 @@
   "main": "index.cjs",
   "type": "module",
   "scripts": {
+    "start": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon index.cjs"
-
+    "dev": "nodemon index.cjs"
   },
+  "proxy": "http://localhost:3000",
+
   "author": "WebMa Dev Team",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
     "pdf-merger-js": "^5.1.2",
