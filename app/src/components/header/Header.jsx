@@ -1,6 +1,5 @@
 import React from "react";
 import ucerLogo from "../../assets/ucerLogo.jpg";
-import "./header.css";
 
 const Header = () => {
   return (

@@ -1,12 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
-
-section{
+section {
     background-color: #FCFCFC;
     font-family: "Inria Serif", serif;
     font-weight: 400;
+    position: relative;
 }
 
-.download-btn{
-    cursor: pointer;
+.main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-block: 2rem;
+    padding-block: 3rem;
+    border-radius: 15px;
+    flex-grow: 0.1;
+    flex-wrap: wrap;
 }
+
+.delete-btn>img {
+    height: 100px;
+    width: 100px;
+    transition: height 200ms;
+    transition: width 200ms;
+
+}
+
+.delete-btn:hover {
+    img {
+        height: 90px;
+        width: 90px;
+    }
+
+}
+
+.download-btn:hover {
+    img {
+        height: 90px;
+        width: 90px;
+    }
+
+}
+
+.download-btn>img {
+    height: 100px;
+    width: 100px;
+    transition: height 200ms;
+    transition: width 200ms;
+
+}
+
+/* .download-btn{
+    cursor: pointer;
+    position: absolute;
+    top: 4rem;
+}
+
+.delete-btn{
+    cursor: pointer;
+    position: absolute;
+    bottom: 4rem;
+} */

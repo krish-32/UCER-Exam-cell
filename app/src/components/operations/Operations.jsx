@@ -8,7 +8,7 @@ import "./operation.css";
 
 const Operations = () => {
   return (
-    <section className="container">
+    <section className="container main-menu">
       <div className="left-container">
         <Exampdf />
         <Studentpdf />

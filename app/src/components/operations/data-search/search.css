@@ -1,6 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+.date-selection{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
 
-div{
-    font-family: "Inria Serif", serif;
-    font-weight: 400;
+input[type="date"]{
+    padding: 0 10px;
+    font-family: Inria Serif;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    margin-left: -50px;
+}
+::-webkit-calendar-picker-indicator{
+    background-image: url('../../../assets/Calendar.svg');
+    background-repeat: no-repeat;
+    height: 55px;
+    width: 55px;
+}
+
+.search{
+    background-color: #D9D9D9;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.search:hover{
+    background-color: #e4e4e4;
+}
+.search > img{
+    height: 60px;
+    width: 60px;
 }

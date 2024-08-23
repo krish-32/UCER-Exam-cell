@@ -1,7 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+.student-container>p {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
 
+.student-container {
+    margin-top: 1rem;
+}
 
-div{
-    font-family: "Inria Serif", serif;
-    font-weight: 400;
+.student-input {
+    padding-block: .5rem;
+    padding-inline: 1rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
 }
