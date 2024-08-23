@@ -23,7 +23,7 @@ const Exampdf = () => {
         method: 'POST',
         body: formData, // Send FormData with files
       });
-      setprocess(null);
+      setprocess("File Uploaded");
       // Parse the response JSON
       const date_datas=await response.json();
       console.log(date_datas);
