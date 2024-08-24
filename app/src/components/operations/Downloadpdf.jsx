@@ -11,10 +11,8 @@ const Downloadpdf = () => {
     const pageHeight = pdf.internal.pageSize.height;
     const pageWidth = pdf.internal.pageSize.width;
     const inputHeight = input.scrollHeight;
-    const inputWidth = input.scrollWidth;
-    const scale = pageWidth / inputWidth;
 
-    let position = 1;
+    let position = 0;
 
     const capturePage = (scrollPosition) => {
       input.scrollTop = scrollPosition;

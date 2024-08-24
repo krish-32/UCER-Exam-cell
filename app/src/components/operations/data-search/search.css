@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-around;
     position: relative;
+    cursor: pointer;
 }
 
 input[type="date"]{
@@ -14,12 +15,14 @@ input[type="date"]{
     outline: none;
     border-radius: 15px;
     margin-left: -50px;
+    cursor: pointer;
 }
 ::-webkit-calendar-picker-indicator{
     background-image: url('../../../assets/Calendar.svg');
     background-repeat: no-repeat;
     height: 55px;
     width: 55px;
+    cursor: pointer;
 }
 
 .search{
@@ -32,6 +35,7 @@ input[type="date"]{
     align-items: center;
     justify-content: center;
     margin-left: 1rem;
+    cursor: pointer;
 }
 
 .search:hover{

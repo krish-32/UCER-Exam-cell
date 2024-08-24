@@ -21,6 +21,8 @@ section {
     width: 100px;
     transition: height 200ms;
     transition: width 200ms;
+    cursor: pointer;
+
 
 }
 
@@ -28,6 +30,8 @@ section {
     img {
         height: 90px;
         width: 90px;
+        cursor: pointer;
+
     }
 
 }
@@ -36,6 +40,8 @@ section {
     img {
         height: 90px;
         width: 90px;
+        cursor: pointer;
+
     }
 
 }
@@ -45,6 +51,7 @@ section {
     width: 100px;
     transition: height 200ms;
     transition: width 200ms;
+    cursor: pointer;
 
 }
 

@@ -6,7 +6,7 @@ import Deletedata from "./Deletedata";
 import Downloadpdf from "./Downloadpdf";
 import "./operation.css";
 
-const Operations = () => {
+const Operations = ({handleInputDate , searchExamStudents}) => {
   return (
     <section className="container main-menu">
       <div className="left-container">
@@ -18,7 +18,10 @@ const Operations = () => {
         <Deletedata />
       </div>
       <div className="right-container">
-        <Search />
+        <Search 
+        handleInputDate = {handleInputDate} 
+        searchExamStudents={searchExamStudents}
+        />
       </div>
     </section>
   );
