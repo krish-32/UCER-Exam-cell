@@ -14,8 +14,11 @@ input[type="date"]{
     border: none;
     outline: none;
     border-radius: 15px;
-    margin-left: -50px;
+    margin-left: -25px;
     cursor: pointer;
+}
+input[type="date"]:hover{
+    border: 2px green solid;
 }
 ::-webkit-calendar-picker-indicator{
     background-image: url('../../../assets/Calendar.svg');
@@ -44,4 +47,8 @@ input[type="date"]{
 .search > img{
     height: 60px;
     width: 60px;
+}
+
+.search:hover{
+    border: 2px green solid;
 }

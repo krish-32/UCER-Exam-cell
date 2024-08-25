@@ -1,43 +1,11 @@
 import { React, useState } from "react";
 import "./exampdf.css";
+import Alert from "../../Alert";
 
-const Exampdf = () => {
-  const [files, setFile] = useState([]);
-  const [ExamDates, setExamDates] = useState([]);
-  const [process, setprocess] = useState(null);
-  const [Error, setError] = useState(null);
-
-  // Handle form submission
-  const upload_date_pdf = async (e) => {
-    e.preventDefault();
-    // Create a new FormData instance
-    const formData = new FormData();
-    // Append each file to FormData
-    for (let i = 0; i < files.length; i++) {
-      formData.append("file", files[i]);
-    }
-    try {
-      // Make the POST request
-      setprocess("Processing...Please Wait");
-      const response = await fetch("http://localhost:3000/ExamDates/", {
-        method: "POST",
-        body: formData, // Send FormData with files
-      });
-      setprocess("File Uploaded");
-      // Parse the response JSON
-      const date_datas = await response.json();
-      console.log(date_datas);
-      setExamDates(date_datas);
-    } catch (error) {
-      console.error("Error:", error);
-      setError(error); // Store the error
-    }
-  };
-
+const Exampdf = ({ setFile, isUploading, Error, handlePdfUpload }) => {
   return (
     <div className="exam-container">
       <p>Exam Schedule PDF</p>
-      {process && <p>{process}</p>}
       <div className="exam-input" style={{ backgroundColor: "#D9D9D9" }}>
         <input
           type="file"
@@ -46,7 +14,7 @@ const Exampdf = () => {
           accept=".pdf"
           onChange={(e) => setFile(e.target.files)}
         />
-        <span className="upload-btn">
+        <span className="upload-btn" onClick={()=> handlePdfUpload("ExamDates")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="30px"

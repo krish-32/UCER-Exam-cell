@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 
 
 // console.log(pdf);
-app.post('/studentData', upload.array('pdfs'), async (req, res) => {
+app.post('/studentData', upload.array('studentData'), async (req, res) => {
   if (!req.files) {
     return res.status(400).json({ message: 'No files were uploaded.' });
   } else {
@@ -48,6 +48,7 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
         pdfParser.removeAllListeners();
         return res.status(500).json(errData);
       });
+      console.log("Respose Sent /StudentData");
     } catch (error) {
       return res.status(500).json({ message: 'Failed to merge PDFs.', error: error.message });
     };
@@ -55,7 +56,7 @@ app.post('/studentData', upload.array('pdfs'), async (req, res) => {
 });
 
 
-app.post('/ExamDates', upload.array('file'), async (req, res) => {
+app.post('/ExamDates', upload.array('ExamDates'), async (req, res) => {
   if (!req.files) {
     res.json({ error: 'No files were uploaded' });
   }
@@ -80,6 +81,7 @@ app.post('/ExamDates', upload.array('file'), async (req, res) => {
         return res.status(500).json(errData);
 
       });
+      console.log("Respose Sent /ExamDates");
     } catch (error) {
       return res.status(500).json({ message: 'Failed at respose json data.', error: error.message });
     };

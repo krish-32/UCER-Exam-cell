@@ -1,12 +1,16 @@
 import React from "react";
 import "./operation.css";
 import deleteBtn from "../../assets/Trash.svg";
-
+import { MyLocalStorage } from "../../helpers/indexedDB";
 const Deletedata = () => {
 
+  const deleteIndexedDB = new MyLocalStorage();
+  
   const deleteData = () =>{
     if(confirm('Are sure to Clear Data ?')){
-       alert('Data Deleted !')
+       deleteIndexedDB.clear().then(()=>{
+         alert('All Data Deleted !!');
+       })
     }
   }
   return (

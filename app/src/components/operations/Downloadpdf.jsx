@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./operation.css";
 import downloadBtn from "../../assets/Download.svg";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Alert from '../Alert';
 
 const Downloadpdf = () => {
+  const [isDownloading, setIsDownloading] = useState(false);
   const handleDownloadPDF = () => {
+    setIsDownloading(true);
     const input = document.getElementById("pdf-content");
     const pdf = new jsPDF("p", "mm", "a4");
     const pageHeight = pdf.internal.pageSize.height;
@@ -36,15 +39,27 @@ const Downloadpdf = () => {
     }
 
     Promise.all(promises).then(() => {
+      setIsDownloading(false);
       pdf.save(`${new Date().toLocaleDateString()}` + "-EXAM-STUDENTS.pdf");
     });
   };
 
   return (
     <>
-      <div className="download-btn" onClick={handleDownloadPDF}>
-        <img src={downloadBtn} alt="Download" />
-      </div>
+      {isDownloading ? (
+        <>
+          <div className="download-btn" onClick={handleDownloadPDF}>
+            <img src={downloadBtn} alt="Download" />
+          </div>
+          <Alert alterText={'Preparing PDF'}/>
+        </>
+      ) : (
+        <>
+          <div className="download-btn" onClick={handleDownloadPDF}>
+            <img src={downloadBtn} alt="Download" />
+          </div>
+        </>
+      )}
     </>
   );
 };

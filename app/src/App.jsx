@@ -3,17 +3,8 @@ import Header from "./components/header/Header";
 import Operations from "./components/operations/Operations";
 import Results from "./components/results/Results";
 import { dates } from "./helpers/examDates";
-
+import { MyLocalStorage } from "./helpers/indexedDB.js";
 const App = () => {
-  const [date, setDate] = useState(() => {
-    const month = new Date().toDateString().slice(4, 7).toLocaleUpperCase();
-    const date = new Date().toDateString().slice(8, 10);
-    const year = new Date().getFullYear().toString().slice(2, 4);
-    const formatedDate = `${date}-${month}-${year}`;
-    return formatedDate;
-  });
-  const [examDates, setExamDates] = useState(() => dates[date] || []);
-  const [resultStudentData, setResultStudentData] = useState([]);
   const studentData = [
     {
       id: "913019103002",
@@ -53,8 +44,46 @@ const App = () => {
       ],
     },
   ];
+  const [date, setDate] = useState(() => {
+    const month = new Date().toDateString().slice(4, 7).toLocaleUpperCase();
+    const date = new Date().toDateString().slice(8, 10);
+    const year = new Date().getFullYear().toString().slice(2, 4);
+    const formatedDate = `${date}-${month}-${year}`;
+    return formatedDate || "";
+  });
+  const studentLocalStorage = new MyLocalStorage();
+  const examDateLocalStorage = new MyLocalStorage();
+  const [studentStorage, setStudentstorage] = useState([]);
+  const [examStorage, setExamStorage] = useState({});
+  const [examDates, setExamDates] = useState(() => examStorage[date] || []);
+  const [resultStudentData, setResultStudentData] = useState([
+    {
+      department: "Select Date",
+      firstName: "Select ",
+      lastName: "Date",
+      registerNumber: "Select Date",
+      id: "YYY",
+      regulation: "Select Date",
+    },
+  ]);
+  const [files, setFile] = useState([]);
+  const [isUploading, setisUploading] = useState(false);
+  const [Error, setError] = useState(null);
+  // students indexed DB Local Storage
+  // studentLocalStorage.setItem("studentData", studentData);
+  // examDateLocalStorage.set("examDateData", dates);
+
   // for while loading the app searching the students if the student have exam
-  useEffect(() => searchExamStudents(), []);
+  useEffect(() => {
+    // while loading the app getting the data from indexed db and store in state variable
+    studentLocalStorage.get("studentData").then((data) => {
+      setStudentstorage(data);
+    });
+
+    examDateLocalStorage.get("ExamDates").then((data) => {
+      setExamStorage(data);
+    });
+  }, []);
 
   const handleInputDate = () => {
     try {
@@ -74,7 +103,8 @@ const App = () => {
       //setting the dates for the for the setDate
       setDate(__formatedDate);
       // creating a exam dates array with the formattedDate
-      setExamDates(dates[__formatedDate]);
+      setExamDates(examStorage[__formatedDate]);
+      // set [] if the undefined throw 
     } catch (err) {
       console.log(err.message);
     }
@@ -83,7 +113,7 @@ const App = () => {
   const searchExamStudents = () => {
     try {
       //filtering the exam students
-      const __mappedStudentData = studentData.filter((data) => {
+      const __mappedStudentData = studentStorage.filter((data) => {
         const __subjectsArr = data.subjects;
         for (let i = 0; i < __subjectsArr.length; i++) {
           //checking the student have exam on the date or not
@@ -108,10 +138,36 @@ const App = () => {
       ]);
     }
   };
-
+  // Handle form submission
+  const handlePdfUpload = async (route) => {
+    setisUploading(true);
+    // Create a new FormData instance
+    const formData = new FormData();
+    // Append each file to FormData
+    for (let i = 0; i < files.length; i++) {
+      formData.append(route, files[i]);
+    }
+    try {
+      // Make the POST request
+      const response = await fetch(`http://localhost:3000/${route}`, {
+        method: "POST",
+        body: formData, // Send FormData with files
+      });
+      const resData = await response.json();
+      studentLocalStorage.setItem(route, resData);
+      setisUploading(false);
+      console.log('Response Stored In IndexDB');
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message); 
+    }
+  };
   console.log(resultStudentData);
   console.log(examDates);
   console.log(date);
+  console.log("student Data :" ,studentStorage);
+  console.log("ExamDates Data :" ,examStorage);
+
 
   return (
     <>
@@ -119,6 +175,10 @@ const App = () => {
       <Operations
         handleInputDate={handleInputDate}
         searchExamStudents={searchExamStudents}
+        setFile={setFile}
+        isUploading={isUploading}
+        Error={Error}
+        handlePdfUpload={handlePdfUpload}
       />
       <Results resultStudentData={resultStudentData} />
     </>

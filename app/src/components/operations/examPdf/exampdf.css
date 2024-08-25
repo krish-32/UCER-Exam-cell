@@ -1,49 +1,56 @@
-.exam-container > p {
+.exam-container>p {
   font-weight: 700;
   font-size: 1.3rem;
 }
 
-.exam-input{
-    padding-block: .5rem;
-    padding-inline: 1rem;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+.exam-input {
+  padding-block: .5rem;
+  padding-inline: 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.upload-btn{
-    height: 2.2rem;
-    padding-inline:.3rem;
-    background-color: white;
-    display: inline-block;
-    border-radius: 5px;
+.exam-input:hover {
+  border: 1px black solid;
+
 }
 
-.upload-btn:hover{
-  background-color:#f3f4f6;
+.upload-btn {
+  height: 2.2rem;
+  padding-inline: .3rem;
+  background-color: white;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.upload-btn:hover {
+  background-color: #f3f4f6;
   transition: background-color 200ms;
+  border: 2px green solid;
 }
 
 input[type="file"]::file-selector-button {
-    border-radius: 15px;
-    padding: 0 30px;
-    height: 35px;
-    cursor: pointer;
-    background-color: white;
-    border: none;
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
-    margin-right: 16px;
-    transition: background-color 200ms;
-    font-weight: bold;
-  }
-  
-  /* file upload button hover state */
-  input[type="file"]::file-selector-button:hover {
-    background-color: #f3f4f6;
-  }
-  
-  /* file upload button active state */
-  input[type="file"]::file-selector-button:active {
-    background-color: #e5e7eb;
-  }
+  border-radius: 15px;
+  padding: 0 30px;
+  height: 35px;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: background-color 200ms;
+  font-weight: bold;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+  border: 2px green double;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}

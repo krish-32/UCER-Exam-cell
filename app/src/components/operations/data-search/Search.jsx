@@ -1,7 +1,7 @@
 import React from "react";
 import "./search.css";
 import searchBtn from "../../../assets/Search.svg";
-const Search = ({handleInputDate,searchExamStudents}) => {
+const Search = ({ handleInputDate, searchExamStudents }) => {
   return (
     <div className="date-selection">
       <input
@@ -13,7 +13,9 @@ const Search = ({handleInputDate,searchExamStudents}) => {
       />
 
       <span className="search" onClick={() => searchExamStudents()}>
-        <img src={searchBtn} alt="search" />
+        <a href="#resRef">
+          <img src={searchBtn} alt="search" />
+        </a>
       </span>
     </div>
   );

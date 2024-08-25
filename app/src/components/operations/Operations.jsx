@@ -6,21 +6,38 @@ import Deletedata from "./Deletedata";
 import Downloadpdf from "./Downloadpdf";
 import "./operation.css";
 
-const Operations = ({handleInputDate , searchExamStudents}) => {
+const Operations = ({
+  handleInputDate,
+  searchExamStudents,
+  setFile,
+  isUploading,
+  Error,
+  handlePdfUpload,
+}) => {
   return (
     <section className="container main-menu">
       <div className="left-container">
-        <Exampdf />
-        <Studentpdf />
+        <Exampdf
+          setFile={setFile}
+          isUploading={isUploading}
+          Error={Error}
+          handlePdfUpload={handlePdfUpload}
+        />
+        <Studentpdf
+          setFile={setFile}
+          isUploading={isUploading}
+          Error={Error}
+          handlePdfUpload={handlePdfUpload}
+        />
       </div>
       <div className="center-container">
         <Downloadpdf />
         <Deletedata />
       </div>
       <div className="right-container">
-        <Search 
-        handleInputDate = {handleInputDate} 
-        searchExamStudents={searchExamStudents}
+        <Search
+          handleInputDate={handleInputDate}
+          searchExamStudents={searchExamStudents}
         />
       </div>
     </section>

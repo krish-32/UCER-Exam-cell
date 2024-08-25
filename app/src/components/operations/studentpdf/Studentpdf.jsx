@@ -1,6 +1,6 @@
 import React from "react";
 import "./studentpdf.css";
-const Studentpdf = () => {
+const Studentpdf = ({ setFile, isUploading, Error, handlePdfUpload }) => {
   return (
     <div className="student-container">
       <p>Students PDF</p>
@@ -11,8 +11,9 @@ const Studentpdf = () => {
           id="studentpdf"
           accept=".pdf"
           multiple={true}
+          onChange={(e) => setFile(e.target.files)}
         />
-        <span className="upload-btn">
+        <span className="upload-btn" onClick={()=> handlePdfUpload("studentData")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="30px"
