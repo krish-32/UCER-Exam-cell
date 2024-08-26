@@ -58,7 +58,7 @@ app.post('/studentData', upload.array('studentData'), async (req, res) => {
 
 app.post('/ExamDates', upload.array('ExamDates'), async (req, res) => {
   if (!req.files||req.files.length===0) {
-    res.json({ error: 'No files were uploaded' });
+    return res.status(400).json({ message: 'No files were uploaded' });
   }
   else {
     try {

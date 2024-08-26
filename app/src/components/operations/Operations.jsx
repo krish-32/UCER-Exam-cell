@@ -13,6 +13,8 @@ const Operations = ({
   isUploading,
   Error,
   handlePdfUpload,
+  studentStorage,
+  examStorage
 }) => {
   return (
     <section className="container main-menu">
@@ -22,12 +24,16 @@ const Operations = ({
           isUploading={isUploading}
           Error={Error}
           handlePdfUpload={handlePdfUpload}
+          studentStorage={studentStorage}
+          examStorage={examStorage}
         />
         <Studentpdf
           setFile={setFile}
           isUploading={isUploading}
           Error={Error}
           handlePdfUpload={handlePdfUpload}
+          studentStorage={studentStorage}
+          examStorage={examStorage}
         />
       </div>
       <div className="center-container">

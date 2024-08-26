@@ -1,7 +1,7 @@
 import React from "react";
 import "./operation.css";
 import deleteBtn from "../../assets/Trash.svg";
-import { MyLocalStorage } from "../../helpers/indexedDB";
+import { MyLocalStorage } from "../../db/indexedDB";
 const Deletedata = () => {
 
   const deleteIndexedDB = new MyLocalStorage();
