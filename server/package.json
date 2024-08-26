@@ -2,15 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "UCER Exam Cell Backend",
-  "main": "index.cjs",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.cjs"
+    "dev": "nodemon server.js"
   },
-  "proxy": "http://localhost:3000",
-
   "author": "WebMa Dev Team",
   "license": "ISC",
   "dependencies": {

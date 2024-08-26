@@ -1,0 +1,15 @@
+1. catalyst login
+
+2. catalyst init 
+
+3. select project
+
+4. select serviceless appsail
+
+5. select node js
+
+6. catalyst serve 
+
+7. configure the catalyst PORT process.env.X_ZOHO_CATALYST_LISTEN_PORT|9000
+
+8. catalyst deploy

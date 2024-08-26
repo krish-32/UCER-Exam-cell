@@ -6,7 +6,6 @@ const { PDFDocument } = require('pdf-lib');
 const path = require('path');
 const constructStudentDataFromPDF = require('./extractStudentData.cjs');
 const app = express();
-const PORT = process.env.PORT || 3000;
 const constructExamDatesFromPDF = require('./extractExamDates.cjs');
 const { error } = require('console');
 // Set up multer for handling file uploads and specify the destination folder
@@ -20,10 +19,13 @@ const corsOptions = {
 };
 
 // Apply the CORS middleware with the options
-app.use(cors(corsOptions));
+app.use(cors());
 
+// home route for testing
+app.get('/' ,(req,res) => {
+  res.status(200).json({Message : "You Hit A Home URL !"})
+});
 
-// console.log(pdf);
 app.post('/studentData', upload.array('studentData'), async (req, res) => {
   if (!req.files||req.files.length===0) {
     return res.status(400).json({ message: 'No files were uploaded.' });
@@ -92,8 +94,8 @@ app.post('/ExamDates', upload.array('ExamDates'), async (req, res) => {
 
 
 //api port for student detail data
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`);
+app.listen(process.env.X_ZOHO_CATALYST_LISTEN_PORT || 9000, () => {
+  console.log(`Server is running on port http://localhost:${process.env.X_ZOHO_CATALYST_LISTEN_PORT}`);
 });
 
 

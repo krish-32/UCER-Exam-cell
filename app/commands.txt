@@ -1,0 +1,7 @@
+1. firebase login
+
+2. firebase init hosting
+
+3. firebase emulators:start --project projectId
+
+4. firebase deploy

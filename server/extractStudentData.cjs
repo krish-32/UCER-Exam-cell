@@ -1,7 +1,7 @@
-let studentData = [];
-let i, j;
 
 async function constructStudentDataFromPDF(pdf) {
+    let studentData = [];
+    let i, j;
     for (j = 0; j <= pdf.Pages.length - 1; j++) {
         let registerNumber;
         let firstName;
@@ -60,5 +60,5 @@ async function constructStudentDataFromPDF(pdf) {
     //student data as per the Hall Ticket
     return studentData;
 }
-module.exports=constructStudentDataFromPDF;
+module.exports = constructStudentDataFromPDF;
 
