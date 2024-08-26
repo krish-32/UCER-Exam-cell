@@ -1,6 +1,5 @@
 const express = require('express');
 const PDFParser = require('pdf2json');
-const pdfParser = new PDFParser(this, 1);
 const multer = require('multer');
 const fs = require('fs');
 const { PDFDocument } = require('pdf-lib');
@@ -26,10 +25,11 @@ app.use(cors(corsOptions));
 
 // console.log(pdf);
 app.post('/studentData', upload.array('studentData'), async (req, res) => {
-  if (!req.files) {
+  if (!req.files||req.files.length===0) {
     return res.status(400).json({ message: 'No files were uploaded.' });
   } else {
     try {
+      const pdfParser = new PDFParser(this, 1);
       //this gives a buffer data of the input pdf file and it includes merge function to compain pdf
       const Student_buffer_data=await merge_function(req.files);
       //this load the pdf buffer data to read the merged pdf file
@@ -57,11 +57,12 @@ app.post('/studentData', upload.array('studentData'), async (req, res) => {
 
 
 app.post('/ExamDates', upload.array('ExamDates'), async (req, res) => {
-  if (!req.files) {
+  if (!req.files||req.files.length===0) {
     res.json({ error: 'No files were uploaded' });
   }
   else {
     try {
+      const pdfParser = new PDFParser(this, 1);
       const Dates_buffer_data=await merge_function(req.files)
       //this load the pdf buffer data to read the merged pdf file
       await pdfParser.parseBuffer(Dates_buffer_data);
