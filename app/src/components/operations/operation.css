@@ -56,24 +56,31 @@ section {
 }
 
 .downloading {
-    width: 50vw;
+    width: 80vw;
+    height: 50vh;
     background-color: green;
     text-align: center;
     border-radius: 15px;
     position: absolute;
     z-index: 1000;
-    left: 25%;
-    top: 40%;
+    left: 2%;
+    top: 0%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background:green;
-    animation: fade 2s infinite;
-    transition: opacity 1s;
+    background: green;
+    /* animation: fade 2s infinite;
+    transition: opacity 1s; */
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .downloading>p {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: white;
     font-weight: bolder;
     text-align: center;
@@ -81,20 +88,74 @@ section {
 }
 
 @keyframes fade {
-    0%{
+    0% {
         opacity: 0.25;
-    }100%{
+    }
+
+    100% {
         opacity: 1;
     }
 }
-/* .download-btn{
-    cursor: pointer;
-    position: absolute;
-    top: 4rem;
+
+/* .loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 30px;
+    background: radial-gradient(circle closest-side, #000 94%, #0000) right/calc(200% - 1em) 100%;
+    animation: l24 1s infinite alternate linear;
 }
 
-.delete-btn{
-    cursor: pointer;
-    position: absolute;
-    bottom: 4rem;
+.loader::before {
+    content: "Loading...";
+    line-height: 1em;
+    color: #0000;
+    background: inherit;
+    background-image: radial-gradient(circle closest-side, #fff 94%, #000);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@keyframes l24 {
+    100% {
+        background-position: left
+    }
+}
+
+@keyframes l10 {
+    100% {
+        background-size: 120% 120%
+    }
 } */
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 150px;
+    aspect-ratio: 1.154;
+    position: relative;
+    background: conic-gradient(from 120deg at 50% 64%,#0000, #25b09b 1deg 120deg,#0000 121deg);
+    animation: l27-0 1.5s infinite cubic-bezier(0.3,1,0,1);
+  }
+  .loader:before,
+  .loader:after {
+    content:'';
+    position: absolute;
+    inset:0;
+    background:inherit;
+    transform-origin: 50% 66%;
+    animation: l27-1 1.5s infinite;
+  }
+  .loader:after {
+    --s:-1;
+  }
+  @keyframes l27-0 {
+     0%,30%      {transform: rotate(0)}
+     70%         {transform: rotate(120deg)}
+     70.01%,100% {transform: rotate(360deg)}
+  }
+  @keyframes l27-1 {
+     0%      {transform: rotate(calc(var(--s,1)*120deg)) translate(0)}
+     30%,70% {transform: rotate(calc(var(--s,1)*120deg)) translate(calc(var(--s,1)*-5px),10px)}
+     100%    {transform: rotate(calc(var(--s,1)*120deg)) translate(0)}
+  }

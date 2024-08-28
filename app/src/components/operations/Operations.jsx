@@ -14,7 +14,9 @@ const Operations = ({
   Error,
   handlePdfUpload,
   studentStorage,
-  examStorage
+  examStorage,
+  setStudentstorage,
+  setExamStorage
 }) => {
   return (
     <section className="container main-menu">
@@ -38,7 +40,8 @@ const Operations = ({
       </div>
       <div className="center-container">
         <Downloadpdf />
-        <Deletedata />
+        <Deletedata setStudentstorage={setStudentstorage}
+        setExamStorage={setExamStorage} />
       </div>
       <div className="right-container">
         <Search

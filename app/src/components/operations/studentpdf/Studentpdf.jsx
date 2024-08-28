@@ -26,7 +26,7 @@ const Studentpdf = ({
         <button
           className="upload-btn"
           onClick={() => handlePdfUpload("studentData")}
-          disabled = {studentStorage || examStorage ? true : false}
+          disabled = {studentStorage  ? true : false}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

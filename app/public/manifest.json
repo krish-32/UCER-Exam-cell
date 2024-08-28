@@ -1,0 +1,36 @@
+{
+    "short_name": "UCER Exam Cell",
+    "name": "UCER Exam Cell",
+    "icons": [
+      {
+        "src": "au-logo.svg",
+        "sizes": "50x50",
+        "type": "image/x-icon"
+      },
+      {
+        "src": "logo.svg",
+        "type": "image/svg",
+        "sizes": "192x192"
+      },
+      {
+        "src": "logo.svg",
+        "type": "image/svg",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "id": "1.0.0",
+    "description": "An UCER COE Students Exam Finder",
+    "dir": "auto",
+    "lang": "en",
+    "categories": [
+      "Education"
+    ],
+    "display_override": [
+      "window-controls-overlay",
+      "landscape"
+    ]
+  }

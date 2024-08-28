@@ -4,7 +4,7 @@
 
 3. select project
 
-4. select serviceless appsail
+4. select serverless appsail
 
 5. select node js
 

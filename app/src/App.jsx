@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/header/Header";
 import Operations from "./components/operations/Operations";
 import Results from "./components/results/Results";
-import { MyLocalStorage } from "./db/indexedDB.js";
+import { MyLocalStorage } from "./db/indexedDB.js";import Alert from "./components/Alert.jsx";
 const App = () => {
   const [date, setDate] = useState(() => {
     const month = new Date().toDateString().slice(4, 7).toLocaleUpperCase();
@@ -98,7 +98,6 @@ const App = () => {
 
   // Handle form submission
   const handlePdfUpload = (route) => {
-    setisUploading(true);
     // delaying hte response time from the server
     setTimeout(async () => {
       // Create a new FormData instance
@@ -108,18 +107,23 @@ const App = () => {
         formData.append(route, files[i]);
       }
       try {
-        // Make the POST request
-        const response = await fetch(`http://localhost:3000/${route}`, {
-          method: "POST",
-          body: formData, // Send FormData with files
-        });
-        const resData = await response.json();
-        console.log(response.status);
-        // checking if any error from server
-        if (response.status == 400 || response.status == 500) {
-          alert(resData.message);
+        if (files.length == 0) {
+          alert("No Files Were Selected !");
           setisUploading(false);
         } else {
+          // for display message
+          setisUploading(true);
+          // Make the POST request
+          const response = await fetch(
+            `https://ucer-backend-50021988656.development.catalystappsail.in/${route}`,
+            {
+              method: "POST",
+              body: formData, // Send FormData with files
+            }
+          );
+          const resData = await response.json();
+          console.log(response.status);
+          // checking if any error from server
           studentLocalStorage.setItem(route, resData);
           // getting the data from the indexedDB
           studentLocalStorage.get("studentData").then((data) => {
@@ -129,6 +133,7 @@ const App = () => {
             setExamStorage(data);
           });
           setisUploading(false);
+          setFile([])
           console.log("Response Stored In IndexDB");
         }
       } catch (error) {
@@ -139,6 +144,7 @@ const App = () => {
       setError(false);
     }, 2000);
   };
+  // logs for the reference
   console.log(resultStudentData);
   console.log(examDates);
   console.log(date);
@@ -157,6 +163,8 @@ const App = () => {
         handlePdfUpload={handlePdfUpload}
         studentStorage={studentStorage}
         examStorage={examStorage}
+        setStudentstorage={setStudentstorage}
+        setExamStorage={setExamStorage}
       />
       <Results resultStudentData={resultStudentData} />
     </>

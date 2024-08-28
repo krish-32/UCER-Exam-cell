@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import "./exampdf.css";
 import Alert from "../../Alert";
 
@@ -26,7 +26,7 @@ const Exampdf = ({
         <button
           className="upload-btn"
           onClick={() => handlePdfUpload("ExamDates")}
-          disabled = {studentStorage.length || examStorage ? true : false}
+          disabled = {examStorage ? true : false}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

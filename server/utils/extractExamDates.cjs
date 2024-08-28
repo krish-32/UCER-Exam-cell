@@ -1,4 +1,3 @@
-//const fs = require('fs');
 let dict_data={};
 let i, j;
 

@@ -1,0 +1,36 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "7265000000016007",
+      "name": "ucer-exam-cell",
+      "domain": {
+        "id": "50021988656",
+        "name": "ucer-exam-cell-60029362024.development"
+      },
+      "timezone": "Asia/Kolkata",
+      "env": [
+        {
+          "idx": 1,
+          "id": "60029362024",
+          "name": "Development",
+          "type": 3
+        },
+        {
+          "idx": 2,
+          "id": "50021992976",
+          "name": "Production",
+          "type": 1
+        }
+      ]
+    }
+  ]
+}

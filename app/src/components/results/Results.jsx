@@ -6,6 +6,9 @@ const Results = ({ resultStudentData }) => {
   return (
     <>
       <section className="container" id="resRef">
+        <p style={{ fontWeight: "bolder" }}>
+          Total Students : {resultStudentData.length}
+        </p>
         <section className="results-container" id="pdf-content">
           <img
             src={resultLogo}
@@ -13,7 +16,7 @@ const Results = ({ resultStudentData }) => {
             className="img-fluid  img-thumbnail"
             style={{ width: "100%", border: "none" }}
           />
-          <table border="1">
+          <table border="1" id="content">
             <thead style={{ position: "sticky", top: 0 }}>
               <tr>
                 <th>Register Number</th>
@@ -41,6 +44,7 @@ const Results = ({ resultStudentData }) => {
                   <td>Students Not Found !</td>
                 </tr>
               )}
+
             </tbody>
           </table>
         </section>

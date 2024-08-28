@@ -1,15 +1,13 @@
 const express = require('express');
 const PDFParser = require('pdf2json');
 const multer = require('multer');
-const fs = require('fs');
 const { PDFDocument } = require('pdf-lib');
-const path = require('path');
-const constructStudentDataFromPDF = require('./extractStudentData.cjs');
+const constructStudentDataFromPDF = require('./utils/extractStudentData.cjs');
 const app = express();
-const constructExamDatesFromPDF = require('./extractExamDates.cjs');
-const { error } = require('console');
-// Set up multer for handling file uploads and specify the destination folder
-const upload = multer({ dest: 'output_files' });
+const constructExamDatesFromPDF = require('./utils/extractExamDates.cjs');
+// Set up multer for handling file uploads || stores data in the Buffer.
+const bufferStorage = multer.memoryStorage();
+const upload = multer({storage: bufferStorage });
 
 //this is used to allows the given orgin to fetch data
 const cors = require('cors');
@@ -107,18 +105,10 @@ async function merge_function(files) {
 
   for (let file of files) {
     // Load each uploaded PDF file
-    const filePath = path.join(__dirname, file.path);
-    const pdfBytes = fs.readFileSync(filePath);
-    const pdf = await PDFDocument.load(pdfBytes);
-
+    const pdf = await PDFDocument.load(file.buffer);
     // Copy all pages from the current PDF into the merged PDF
     const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
     copiedPages.forEach(page => mergedPdf.addPage(page));
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.error(`Error deleting file: ${filePath}. ${err}`);
-      }
-    });
   }
 
   // Save the merged PDF as a buffer
