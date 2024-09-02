@@ -2,7 +2,6 @@ section {
     background-color: #FCFCFC;
     font-family: "Inria Serif", serif;
     font-weight: 400;
-    position: relative;
 }
 
 .main-menu {
@@ -56,19 +55,18 @@ section {
 }
 
 .downloading {
-    width: 80vw;
-    height: 50vh;
+    width: 100vw;
+    height: 100vh;
     background-color: green;
     text-align: center;
-    border-radius: 15px;
     position: absolute;
     z-index: 1000;
-    left: 2%;
-    top: 0%;
     display: flex;
+    top: 0;
+    left: 0;
     align-items: center;
     justify-content: center;
-    background: green;
+    flex-direction: column;
     /* animation: fade 2s infinite;
     transition: opacity 1s; */
     background: rgba(255, 255, 255, 0.25);
@@ -81,10 +79,11 @@ section {
 
 .downloading>p {
     font-size: 2rem;
-    color: white;
+    color:black;
     font-weight: bolder;
     text-align: center;
     margin-bottom: 0;
+    margin-top: 1rem;
 }
 
 @keyframes fade {
@@ -159,3 +158,14 @@ section {
      30%,70% {transform: rotate(calc(var(--s,1)*120deg)) translate(calc(var(--s,1)*-5px),10px)}
      100%    {transform: rotate(calc(var(--s,1)*120deg)) translate(0)}
   }
+
+.particles-js-canvas-el{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+canvas{
+    height: 100vh !important;
+    width: 100vw !important;
+}

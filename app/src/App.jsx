@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/header/Header";
 import Operations from "./components/operations/Operations";
 import Results from "./components/results/Results";
-import { MyLocalStorage } from "./db/indexedDB.js";import Alert from "./components/Alert.jsx";
+import { MyLocalStorage } from "./db/indexedDB.js";
+import Alert from "./components/Alert.jsx";
+
 const App = () => {
   const [date, setDate] = useState(() => {
     const month = new Date().toDateString().slice(4, 7).toLocaleUpperCase();
@@ -29,10 +31,12 @@ const App = () => {
   const [files, setFile] = useState([]);
   const [isUploading, setisUploading] = useState(false);
   const [Error, setError] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
 
   // for while loading the app searching the students if the student have exam
   useEffect(() => {
     // while loading the app getting the data from indexed db and store in state variable
+    setIsLoading(true)
     studentLocalStorage.get("studentData").then((data) => {
       setStudentstorage(data);
     });
@@ -40,6 +44,7 @@ const App = () => {
     examDateLocalStorage.get("ExamDates").then((data) => {
       setExamStorage(data);
     });
+    setTimeout(()=> setIsLoading(false) ,2500);
   }, []);
 
   const handleInputDate = () => {
@@ -144,6 +149,8 @@ const App = () => {
       setError(false);
     }, 2000);
   };
+
+
   // logs for the reference
   console.log(resultStudentData);
   console.log(examDates);
@@ -154,6 +161,7 @@ const App = () => {
   return (
     <>
       <Header />
+      {isLoading ? <Alert alterText={'Loading Please Wait'} /> : <></>}
       <Operations
         handleInputDate={handleInputDate}
         searchExamStudents={searchExamStudents}

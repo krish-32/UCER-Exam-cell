@@ -7,6 +7,7 @@ const Alert = ({alterText}) => {
 
     <div className="downloading">
     <div className="loader"></div>
+    <p>{alterText}...</p>
     </div>
     </>
   );
